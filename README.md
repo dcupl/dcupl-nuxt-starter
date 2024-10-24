@@ -1,4 +1,4 @@
-# Dcupl Angular Starter
+# Dcupl Nuxt Starter
 
 ## Intro
 This project is an Angular starter template integrating [dcupl](https://docs.dcupl.com) for client-side data filtering. It uses data and models from the **"Product Catalog"** console project. You can start by exploring the provided data and models and even create your own console project based on the Starter Catalog to update data and models as needed.
