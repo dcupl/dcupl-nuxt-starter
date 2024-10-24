@@ -15,14 +15,28 @@ declare module "#app" {
   }
 }
 
+let status: "initial_load" | "idle" | "updating" = "initial_load";
+
 const serverDcuplInstance = new DcuplInstance("server");
 export default defineNuxtPlugin({
   setup: async (nuxtApp) => {
     const sessionDcuplInstance = new DcuplInstance("session");
     if (import.meta.server) {
       const shouldUpdate = await serverDcuplInstance.shouldUpdate();
+
       if (shouldUpdate) {
-        await serverDcuplInstance.init();
+        if (status === "initial_load") {
+          console.log("initial load");
+          // for the initial load we have to wait for the server instance to be initialized
+          await serverDcuplInstance.init();
+          status = "idle";
+        } else if (status === "idle") {
+          // when the server instance is idle we can update it without waiting - serving the old version until the new one is ready
+          console.log("updating");
+          status = "updating";
+          serverDcuplInstance.init();
+          status = "idle";
+        }
       }
     } else {
       await sessionDcuplInstance.init();
