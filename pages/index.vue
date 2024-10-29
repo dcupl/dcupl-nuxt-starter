@@ -47,22 +47,24 @@
 <script setup lang="ts">
 const articles = ref<any>([]);
 
-const { $dcupl } = useNuxtApp();
+const dcupl = useDcupl();
 
-const articleList = $dcupl.lists.create({ modelKey: "Article" });
+// create a new list. A DcuplList contains all your model data and persists the applied queries.
+const articleList = dcupl.lists.create({ modelKey: "Article" });
 articleList.catalog.query.applyOptions({ count: 10 });
 
 // get initial data
 articles.value = articleList.catalog.query.execute();
 
+// listen for updates to the list and update the articles
 articleList.on((msg) => {
   if (msg.action === "update") {
     articles.value = articleList.catalog.query.execute();
   }
 });
 
-// cleanup on unmount
 onBeforeUnmount(() => {
+  // cleanup on unmount
   articleList.destroy();
 });
 </script>
