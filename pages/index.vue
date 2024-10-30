@@ -1,11 +1,7 @@
 <template>
-  <div class="container mx-auto">
-    <h3>Home Page</h3>
-
+  <div class="container mx-auto pt-12">
     <div class="flex gap-5">
-      <div
-        class="w-300 flex flex-col flex-shrink-0 gap-3 border-r border-gray-500 px-3"
-      >
+      <div class="w-56 flex flex-col flex-shrink-0 gap-3 px-3">
         <text-filter
           :attribute="'productName'"
           :list="articleList"
@@ -16,9 +12,9 @@
           :list="articleList"
         ></select-filter>
       </div>
-      <div class="w-full">
-        <div class="w-full">
-          <table>
+      <div class="w-full bg-white p-3 rounded-md shadow-lg">
+        <div>
+          <table class="my-0">
             <thead>
               <tr>
                 <td>Id</td>
@@ -93,8 +89,8 @@ const setInitialQueryOptions = () => {
       start: 0,
       count: 10,
       projection: { $: true, vendorId: { $: true } },
-    }
-    // { skipProcessing: true }
+    },
+    { skipProcessing: true }
   );
 };
 
@@ -136,6 +132,7 @@ const init = () => {
   meta.value = articleList.catalog.fn.metadata();
   // listen for updates to the list and update the articles
   articleList.on((msg) => {
+    console.log(msg);
     if (msg.action === "update") {
       articles.value = articleList.catalog.query.execute();
       meta.value = articleList.catalog.fn.metadata();
