@@ -24,6 +24,14 @@ const props = defineProps<{
 const updateFilter = (event: any) => {
   const filterValue = event.target.value;
 
+  // reset paging
+  props.list.catalog.query.applyOptions(
+    {
+      start: 0,
+    },
+    { skipProcessing: true }
+  );
+
   if (filterValue.length === 0) {
     props.list.catalog.query.remove({ groupKey: props.attribute });
   } else {
