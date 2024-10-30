@@ -1,5 +1,8 @@
 # Dcupl Nuxt Starter
 
+![Start - 21](https://github.com/user-attachments/assets/1a89b6bb-4eb3-411b-bda3-0267d4da6ef7)
+
+
 ## Intro
 This project is a Nuxt/Vue starter template integrating [dcupl](https://docs.dcupl.com) for client-side data filtering. It uses data and models from the **"Product Catalog"** console project. You can start by exploring the provided data and models and even create your own console project based on the Starter Catalog to update data and models as needed.
 
