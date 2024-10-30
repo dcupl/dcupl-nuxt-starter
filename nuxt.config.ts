@@ -25,4 +25,10 @@ export default defineNuxtConfig({
       apiKey: "e0aa9e13-8f82-4edb-a5f3-3cf0c9e40207",
     },
   },
+
+  nitro: {
+    firebase: {
+      gen: 2
+    }
+  }
 });
