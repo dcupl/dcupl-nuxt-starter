@@ -30,6 +30,15 @@ onMounted(() => {
 });
 
 const init = () => {
+  initFacets();
+  props.list.on((msg) => {
+    if (msg.action === "update") {
+      initFacets();
+    }
+  });
+};
+
+const initFacets = () => {
   facets.value = props.list.catalog.fn.facets({
     attribute: props.attribute,
     excludeZeros: true,
