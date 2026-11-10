@@ -2,16 +2,17 @@
   <div>
     <label :for="inputId" class="mb-2 block text-xs font-semibold text-black-700">
       {{ label }}
-      <span class="font-normal text-black-600 tabular-nums">({{ facets.length }})</span>
+      <span class="font-normal text-black-600 tabular-nums">({{ options.length }})</span>
     </label>
     <select
       :id="inputId"
+      v-model="selected"
       class="block h-9 w-full cursor-pointer rounded border-black-500 bg-white-50 py-0 pl-2.5 text-sm hover:border-black-50 focus:border-black-50 focus:ring-0"
       @change="updateFilter"
     >
       <option value="">All</option>
-      <option v-for="facet in facets" :key="facet.key" :value="facet.key">
-        {{ facet.key }} ({{ facet.size }})
+      <option v-for="option in options" :key="option.key" :value="option.key">
+        {{ option.key }} ({{ option.size }})
       </option>
     </select>
   </div>
@@ -19,6 +20,7 @@
 <script setup lang="ts">
 import type { DcuplFacet } from "@dcupl/common";
 import type { DcuplList } from "@dcupl/core";
+import { selectFilterOptions } from "~/utils/select-filter-options";
 
 const inputId = useId();
 
@@ -29,11 +31,16 @@ const props = defineProps<{
 }>();
 
 const facets = ref<DcuplFacet[]>([]);
+const selected = ref("");
+
+// the selected value stays an option, with (0), when the other filters leave it no matches;
+// otherwise the select would show "All" while its condition is still applied
+const options = computed(() => selectFilterOptions(facets.value, selected.value));
 
 const initFacets = () => {
   facets.value = props.list.catalog.fn.facets({
     attribute: props.attribute,
-    excludeZeros: true,
+    excludeZeros: false,
   });
 };
 
