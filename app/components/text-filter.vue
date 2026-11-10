@@ -7,7 +7,7 @@
       :id="inputId"
       type="text"
       autocomplete="off"
-      class="block h-9 w-full rounded border-black-500 bg-white-50 px-2.5 text-sm placeholder:text-black-600 hover:border-black-50 focus:border-black-50 focus:ring-0"
+      class="block h-9 w-full rounded border-black-500 bg-white-50 px-2.5 text-base placeholder:text-black-600 hover:border-black-50 focus:border-black-50 focus:ring-0 sm:text-sm"
       placeholder="e.g.: Ball, Yoga, ..."
       @input="updateFilter"
     />

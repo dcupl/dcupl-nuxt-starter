@@ -7,7 +7,7 @@
     <select
       :id="inputId"
       v-model="selected"
-      class="block h-9 w-full cursor-pointer rounded border-black-500 bg-white-50 py-0 pl-2.5 text-sm hover:border-black-50 focus:border-black-50 focus:ring-0"
+      class="block h-9 w-full cursor-pointer rounded border-black-500 bg-white-50 py-0 pl-2.5 text-base hover:border-black-50 focus:border-black-50 focus:ring-0 sm:text-sm"
       @change="updateFilter"
     >
       <option value="">All</option>
