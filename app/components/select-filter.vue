@@ -20,9 +20,8 @@
 <script setup lang="ts">
 import type { DcuplFacet } from "@dcupl/common";
 import type { DcuplList } from "@dcupl/core";
+import { setSelectFilter } from "~/utils/filters";
 import { selectFilterOptions } from "~/utils/select-filter-options";
-
-const inputId = useId();
 
 const props = defineProps<{
   list: DcuplList;
@@ -30,6 +29,7 @@ const props = defineProps<{
   label: string;
 }>();
 
+const inputId = useId();
 const facets = ref<DcuplFacet[]>([]);
 const selected = ref("");
 
@@ -37,47 +37,19 @@ const selected = ref("");
 // otherwise the select would show "All" while its condition is still applied
 const options = computed(() => selectFilterOptions(facets.value, selected.value));
 
-const initFacets = () => {
-  facets.value = props.list.catalog.fn.facets({
-    attribute: props.attribute,
-    excludeZeros: false,
-  });
+const loadFacets = (): void => {
+  facets.value = props.list.catalog.fn.facets({ attribute: props.attribute, excludeZeros: false });
 };
 
 // the options are in the server-rendered HTML; the browser keeps them in sync with the other filters
-initFacets();
+loadFacets();
+let stopFollowing = (): void => {};
 onMounted(() => {
-  props.list.on((msg) => {
-    if (msg.action === "update") {
-      initFacets();
-    }
-  });
+  stopFollowing = props.list.onResultChange(loadFacets);
 });
+onBeforeUnmount(() => stopFollowing());
 
-const updateFilter = (event: Event) => {
-  const filterValue = (event.target as HTMLSelectElement).value;
-
-  // reset paging
-  props.list.catalog.query.applyOptions(
-    {
-      start: 0,
-    },
-    { skipProcessing: true }
-  );
-
-  if (!filterValue) {
-    props.list.catalog.query.remove({ groupKey: props.attribute });
-  } else {
-    props.list.catalog.query.apply(
-      {
-        attribute: props.attribute,
-        operator: "eq",
-        value: filterValue,
-      },
-      {
-        mode: "set",
-      }
-    );
-  }
+const updateFilter = (event: Event): void => {
+  setSelectFilter(props.list, props.attribute, (event.target as HTMLSelectElement).value);
 };
 </script>

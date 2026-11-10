@@ -15,8 +15,7 @@
 </template>
 <script setup lang="ts">
 import type { DcuplList } from "@dcupl/core";
-
-const inputId = useId();
+import { setTextFilter } from "~/utils/filters";
 
 const props = defineProps<{
   list: DcuplList;
@@ -24,34 +23,9 @@ const props = defineProps<{
   label: string;
 }>();
 
-// filters while you type: every input event replaces this attribute's condition
-const updateFilter = (event: Event) => {
-  const filterValue = (event.target as HTMLInputElement).value;
+const inputId = useId();
 
-  // reset paging
-  props.list.catalog.query.applyOptions(
-    {
-      start: 0,
-    },
-    { skipProcessing: true }
-  );
-
-  if (filterValue.length === 0) {
-    props.list.catalog.query.remove({ groupKey: props.attribute });
-  } else {
-    props.list.catalog.query.apply(
-      {
-        attribute: props.attribute,
-        operator: "find",
-        value: `/${filterValue}/`,
-        options: {
-          transform: ["lowercase"],
-        },
-      },
-      {
-        mode: "set",
-      }
-    );
-  }
+const updateFilter = (event: Event): void => {
+  setTextFilter(props.list, props.attribute, (event.target as HTMLInputElement).value);
 };
 </script>

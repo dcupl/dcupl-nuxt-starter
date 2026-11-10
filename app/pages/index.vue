@@ -37,8 +37,8 @@
         <div class="flex h-14 items-center justify-between gap-3 bg-black-100 px-4 sm:px-6">
           <h2 id="results-title" class="text-xs tracking-[0.12em] text-black-700 uppercase">Articles</h2>
           <p class="text-xs text-black-700 tabular-nums" aria-live="polite">
-            <span class="font-semibold text-black-50">{{ meta?.currentSize }}</span>
-            / {{ meta?.initialSize }} results
+            <span class="font-semibold text-black-50">{{ meta.currentSize }}</span>
+            / {{ meta.initialSize }} results
           </p>
         </div>
 
@@ -102,8 +102,8 @@
             <button
               type="button"
               class="dcu-button dcu-button-outline pl-2"
-              :disabled="isPreviousButtonDisabled()"
-              @click="previous()"
+              :disabled="previousDisabled"
+              @click="previous"
             >
               <svg viewBox="0 0 16 16" aria-hidden="true" class="size-4 fill-none stroke-current stroke-[1.5]">
                 <path d="M10 4 6 8l4 4" />
@@ -113,8 +113,8 @@
             <button
               type="button"
               class="dcu-button dcu-button-outline pr-2"
-              :disabled="isNextButtonDisabled()"
-              @click="next()"
+              :disabled="nextDisabled"
+              @click="next"
             >
               Next
               <svg viewBox="0 0 16 16" aria-hidden="true" class="size-4 fill-none stroke-current stroke-[1.5]">
@@ -129,9 +129,9 @@
 </template>
 <script setup lang="ts">
 import type { ListMetadata } from "@dcupl/common";
+import { PAGE_SIZE, usePaging } from "~/composables/usePaging";
 
-const articles = ref<any>([]);
-const meta = ref<ListMetadata | undefined>(undefined);
+type Article = { key: string; productName: string; category: string; price: number };
 
 const columns = [
   { attribute: "key", label: "Id" },
@@ -142,82 +142,28 @@ const columns = [
 
 const dcupl = useDcupl();
 
-// create a new list. A DcuplList contains all your model data and persists the applied queries.
+// a DcuplList holds the model's data and keeps the applied filters, sorting and paging
 const articleList = dcupl.lists.create({ modelKey: "Article" });
-
-const setInitialQueryOptions = () => {
-  articleList.catalog.query.applyOptions(
-    {
-      start: 0,
-      count: 10,
-      projection: { $: true, vendorId: { $: true } },
-    },
-    { skipProcessing: true }
-  );
-};
-
-const next = () => {
-  const currentStart = meta.value?.appliedQuery?.start || 0;
-  const currentCount = meta.value?.appliedQuery?.count || 10;
-
-  articleList.catalog.query.applyOptions({
-    start: currentStart + currentCount,
-  });
-};
-
-const previous = () => {
-  const currentStart = meta.value?.appliedQuery?.start || 0;
-  const currentCount = meta.value?.appliedQuery?.count || 10;
-
-  articleList.catalog.query.applyOptions({
-    start: currentStart - currentCount,
-  });
-};
-
-const isPreviousButtonDisabled = () => {
-  const currentStart = meta.value?.appliedQuery?.start || 0;
-  return currentStart <= 0;
-};
-
-const isNextButtonDisabled = () => {
-  const currentStart = meta.value?.appliedQuery?.start || 0;
-  const currentCount = meta.value?.appliedQuery?.count || 10;
-  const currentSize = meta.value?.currentSize || 0;
-  return currentStart + currentCount >= currentSize;
-};
-
-// "Page n of m" for the pagination footer
-const page = computed(() => {
-  const currentStart = meta.value?.appliedQuery?.start || 0;
-  const currentCount = meta.value?.appliedQuery?.count || 10;
-  return Math.floor(currentStart / currentCount) + 1;
+articleList.catalog.query.applyOptions({
+  start: 0,
+  count: PAGE_SIZE,
+  projection: { $: true, vendorId: { $: true } },
 });
 
-const pageCount = computed(() => {
-  const currentCount = meta.value?.appliedQuery?.count || 10;
-  const currentSize = meta.value?.currentSize || 0;
-  return Math.max(1, Math.ceil(currentSize / currentCount));
-});
+const articles = ref(articleList.catalog.query.items<Article>());
+const meta = ref<ListMetadata>(articleList.catalog.fn.metadata());
 
-const init = () => {
-  setInitialQueryOptions();
-
-  // get initial data
-  articles.value = articleList.catalog.query.execute();
+// follow the list when filters or paging change
+const stopFollowing = articleList.onResultChange(() => {
+  articles.value = articleList.catalog.query.items<Article>();
   meta.value = articleList.catalog.fn.metadata();
-  // listen for updates to the list and update the articles
-  articleList.on((msg) => {
-    if (msg.action === "update") {
-      articles.value = articleList.catalog.query.execute();
-      meta.value = articleList.catalog.fn.metadata();
-    }
-  });
-};
+});
 
-init();
+const { page, pageCount, previousDisabled, nextDisabled, previous, next } = usePaging(articleList, meta);
 
+// on the server the module destroys the list after the request
 onBeforeUnmount(() => {
-  // cleanup on unmount
+  stopFollowing();
   articleList.destroy();
 });
 </script>
