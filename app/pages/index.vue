@@ -10,8 +10,8 @@
           rel="noopener"
           class="border-b border-current text-black-50 transition-colors hover:text-blue-300"
           >console.dcupl.com</a
-        >. The first page is rendered on the server by the dcupl instance the API routes share;
-        after hydration the browser builds its own instance and filters on the client.
+        >. The server renders the first page with the dcupl instance its API routes use; after
+        hydration the browser loads its own and filters on the client.
       </p>
     </div>
 
@@ -45,7 +45,7 @@
         <!-- the right edge fades out, so columns that continue off-card read as "scroll for more" -->
         <div
           v-if="articles.length"
-          class="overflow-x-auto [mask-image:linear-gradient(to_right,#000_calc(100%-2rem),transparent)]"
+          class="overflow-x-auto [mask-image:linear-gradient(to_right,#000_calc(100%-2rem),transparent)] focus-visible:outline-offset-[-2px]! focus-visible:[mask-image:none]"
           role="region"
           aria-labelledby="results-title"
           tabindex="0"

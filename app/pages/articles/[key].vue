@@ -27,7 +27,7 @@
         <p class="truncate text-xs text-black-700">{{ article?.productName }}</p>
       </div>
       <pre
-        class="overflow-x-auto p-4 font-mono text-sm leading-6 sm:p-6"
+        class="overflow-x-auto p-4 pr-10 font-mono text-sm leading-6 [mask-image:linear-gradient(to_right,#000_calc(100%-2rem),transparent)] focus-visible:outline-offset-[-2px]! focus-visible:[mask-image:none] sm:p-6 sm:pr-10"
         role="region"
         aria-labelledby="article-title"
         tabindex="0"
