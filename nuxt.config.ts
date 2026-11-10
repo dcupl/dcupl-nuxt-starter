@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: "2024-10-24",
+  compatibilityDate: "2026-11-10",
   ssr: true,
 
   sourcemap: {
