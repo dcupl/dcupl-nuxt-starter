@@ -132,7 +132,6 @@ const init = () => {
   meta.value = articleList.catalog.fn.metadata();
   // listen for updates to the list and update the articles
   articleList.on((msg) => {
-    console.log(msg);
     if (msg.action === "update") {
       articles.value = articleList.catalog.query.execute();
       meta.value = articleList.catalog.fn.metadata();
@@ -147,4 +146,3 @@ onBeforeUnmount(() => {
   articleList.destroy();
 });
 </script>
-<style lang=""></style>

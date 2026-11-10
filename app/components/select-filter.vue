@@ -1,9 +1,10 @@
-<template lang="">
+<template>
   <div class="w-full">
-    <label class="block text-sm font-medium leading-6 text-gray-900">
+    <label :for="inputId" class="block text-sm font-medium leading-6 text-gray-900">
       {{ attribute }}
     </label>
     <select
+      :id="inputId"
       class="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6"
       @change="updateFilter"
     >
@@ -17,6 +18,8 @@
 <script setup lang="ts">
 import type { DcuplFacet } from "@dcupl/common";
 import type { DcuplList } from "@dcupl/core";
+
+const inputId = useId();
 
 const props = defineProps<{
   list: DcuplList;
@@ -72,4 +75,3 @@ const updateFilter = (event: any) => {
   }
 };
 </script>
-<style lang=""></style>

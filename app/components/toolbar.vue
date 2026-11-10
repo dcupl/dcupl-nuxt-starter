@@ -1,4 +1,4 @@
-<template lang="">
+<template>
   <nav class="bg-gray-300">
     <div class="container mx-auto py-3">
       <div class="flex justify-between items-center">
@@ -40,9 +40,10 @@
           >
             <p>
               <span class="font-semibold">How does it work?:</span> This page is
-              initially rendered via SSR using the dcuplServer instance. After
-              the initial load, hydration kicks in and initializes a dcuplClient
-              instance that is used for client-side filtering.
+              initially rendered via SSR using the dcupl instance of the server,
+              which the API routes share. After the initial load, hydration
+              kicks in and the browser builds its own dcupl instance that is
+              used for client-side filtering.
             </p>
             <p>
               <span class="font-semibold">The Models/Data</span> are loaded from
@@ -60,4 +61,3 @@
 <script setup lang="ts">
 const infoVisible = ref(false);
 </script>
-<style lang=""></style>

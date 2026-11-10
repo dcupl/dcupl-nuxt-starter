@@ -20,4 +20,3 @@ const article = dcupl.query.one({
   },
 });
 </script>
-<style lang=""></style>
