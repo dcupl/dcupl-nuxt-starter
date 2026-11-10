@@ -1,4 +1,4 @@
-# Dcupl Nuxt Starter
+# dcupl Nuxt Starter
 
 ![Start - 21](https://github.com/user-attachments/assets/1a89b6bb-4eb3-411b-bda3-0267d4da6ef7)
 
@@ -12,6 +12,13 @@ This project is a Nuxt starter template integrating [dcupl](https://docs.dcupl.c
 - `app/pages/index.vue` lists the articles with filters and paging, `app/pages/articles/[key].vue` shows one article, `server/api/article/[key].ts` returns one article as JSON.
 - The first page is rendered on the server with the dcupl instance of the server process, which the API routes share. The module checks the console project for changes at most once a minute and swaps in a new instance in the background.
 - After hydration the browser builds its own dcupl instance, and filtering and paging run client-side.
+
+## Look and Feel
+The pages use the look of the dcupl console, the same as the dcupl Angular starter, built with Tailwind CSS only:
+
+- `app/assets/css/main.css` holds the console palette as Tailwind theme tokens (`black-*` and `white-*` are alpha scales, plus `blue`, `yellow`, `green`, `red`), the focus ring and five small classes named like their console counterparts (`dcu-button`, `dcu-button-black`, `dcu-button-outline`, `dcu-button-clear`, `dcu-tag`).
+- The font is [Inter](https://rsms.me/inter/), self-hosted from the `@fontsource-variable/inter` package, as an open-source stand-in for the console font.
+- Everything else is Tailwind utilities in the component templates; `app/error.vue` styles the 404 page.
 
 ## Loading your own data
 1. Create a project in the [dcupl Console](https://console.dcupl.com), for example from the "Product Catalog" starter, and copy its **projectId** and **apiKey**.
