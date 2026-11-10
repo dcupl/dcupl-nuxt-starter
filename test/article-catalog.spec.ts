@@ -76,6 +76,14 @@ describe("text filter", () => {
     expect(names()).toEqual(["Yoga Mat (6 mm)", "Yoga Block", "Yoga Strap"]);
   });
 
+  it("matches ( and . literally instead of as regex syntax", () => {
+    setTextFilter(list, "productName", "(");
+    expect(names()).toEqual(["Tennis Balls (3 pack)", "Yoga Mat (6 mm)", "Golf Balls (12 pack)"]);
+
+    setTextFilter(list, "productName", ".");
+    expect(names()).toEqual(["Water Bottle 0.5 l", "Jump Rope 2.5 m"]);
+  });
+
   it("removes its condition when the text is cleared", () => {
     setTextFilter(list, "productName", "yoga");
     setTextFilter(list, "productName", "");

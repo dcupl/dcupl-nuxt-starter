@@ -1,7 +1,11 @@
+import { escapeRegExp } from "@dcupl/common";
 import type { DcuplList } from "@dcupl/core";
 import { goToFirstPage } from "../composables/usePaging";
 
-/** Keeps the items whose `attribute` contains `text`, ignoring case; empty text removes the filter. */
+/**
+ * Keeps the items whose `attribute` contains `text`, ignoring case; empty text removes the filter.
+ * The text is escaped, so `(` or `.` match themselves instead of acting as regex syntax.
+ */
 export function setTextFilter(list: DcuplList, attribute: string, text: string): void {
   goToFirstPage(list);
   if (!text) {
@@ -11,7 +15,7 @@ export function setTextFilter(list: DcuplList, attribute: string, text: string):
   list.catalog.query.setCondition({
     attribute,
     operator: "find",
-    value: `/${text}/`,
+    value: `/${escapeRegExp(text)}/`,
     options: { transform: ["lowercase"] },
   });
 }
