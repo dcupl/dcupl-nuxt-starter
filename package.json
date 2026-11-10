@@ -10,7 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@dcupl/nuxt": "^0.0.8",
+    "@dcupl/nuxt": "file:../dcupl-nuxt-0.1.0-trial.1.tgz",
     "@tailwindcss/forms": "^0.5.9",
     "@tailwindcss/typography": "^0.5.15",
     "nuxt": "^3.13.2",
