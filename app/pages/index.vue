@@ -67,6 +67,9 @@
                   <div class="whitespace-nowrap sm:max-w-[300px] sm:whitespace-normal">{{ article.productName }}</div>
                 </td>
                 <td class="px-3 py-2 align-top">
+                  <div class="whitespace-nowrap sm:max-w-[300px] sm:whitespace-normal">{{ vendorLabel(article.vendorId) }}</div>
+                </td>
+                <td class="px-3 py-2 align-top">
                   <div class="whitespace-nowrap sm:max-w-[300px] sm:whitespace-normal">{{ article.category }}</div>
                 </td>
                 <td class="px-3 py-2 pr-10 text-right align-top whitespace-nowrap">{{ article.price }}</td>
@@ -119,12 +122,14 @@
 import type { ListMetadata } from "@dcupl/common";
 import { usePaging } from "~/composables/usePaging";
 import { PAGE_SIZE } from "~/utils/paging";
+import { type Vendor, vendorLabel } from "~/utils/vendor";
 
-type Article = { key: string; productName: string; category: string; price: number };
+type Article = { key: string; productName: string; category: string; price: number; vendorId?: Vendor };
 
 const columns = [
   { attribute: "key", label: "Id" },
   { attribute: "productName", label: "Name" },
+  { attribute: "vendorId", label: "Vendor" },
   { attribute: "category", label: "Category" },
   { attribute: "price", label: "Price", numeric: true },
 ];
@@ -136,6 +141,7 @@ const articleList = dcupl.lists.create({ modelKey: "Article" });
 articleList.catalog.query.applyOptions({
   start: 0,
   count: PAGE_SIZE,
+  // all article properties, plus the vendor reference resolved to its own properties
   projection: { $: true, vendorId: { $: true } },
 });
 

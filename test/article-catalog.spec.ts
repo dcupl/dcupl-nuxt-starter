@@ -6,10 +6,13 @@ import { ref } from "vue";
 import { usePaging } from "../app/composables/usePaging";
 import { setSelectFilter, setTextFilter } from "../app/utils/filters";
 import { PAGE_SIZE } from "../app/utils/paging";
+import { type Vendor, vendorLabel } from "../app/utils/vendor";
 
-// A tiny stand-in for the console project's Article model, held in memory: no network needed.
+// A tiny stand-in for the console project's Article and Vendor models, held in memory: no network needed.
+// Only the first article has a vendor.
+const vendors = [{ key: "v1", contactName: "John Doe", companyName: "SportWorld" }];
 const articles = [
-  { key: "1", productName: "Basketball", category: "Team Sports", price: 25.99 },
+  { key: "1", productName: "Basketball", category: "Team Sports", price: 25.99, vendorId: "v1" },
   { key: "2", productName: "Soccer Ball", category: "Team Sports", price: 19.99 },
   { key: "3", productName: "Volleyball", category: "Team Sports", price: 22.5 },
   { key: "4", productName: "Hockey Stick", category: "Team Sports", price: 44.99 },
@@ -41,13 +44,22 @@ let dcupl: Dcupl;
 beforeAll(async () => {
   dcupl = new Dcupl();
   dcupl.models.set({
+    key: "Vendor",
+    properties: [
+      { key: "contactName", type: "string" },
+      { key: "companyName", type: "string" },
+    ],
+  });
+  dcupl.models.set({
     key: "Article",
     properties: [
       { key: "productName", type: "string", filter: true },
       { key: "category", type: "string", filter: true },
       { key: "price", type: "float" },
     ],
+    references: [{ key: "vendorId", type: "singleValued", model: "Vendor" }],
   });
+  dcupl.data.set(vendors, { model: "Vendor" });
   dcupl.data.set(articles, { model: "Article" });
   await dcupl.init();
 });
@@ -58,7 +70,7 @@ let paging: ReturnType<typeof usePaging>;
 
 beforeEach(() => {
   list = dcupl.lists.create({ modelKey: "Article" });
-  list.catalog.query.applyOptions({ start: 0, count: PAGE_SIZE });
+  list.catalog.query.applyOptions({ start: 0, count: PAGE_SIZE, projection: { $: true, vendorId: { $: true } } });
   const meta = ref<ListMetadata>(list.catalog.fn.metadata());
   list.onResultChange(() => {
     meta.value = list.catalog.fn.metadata();
@@ -109,6 +121,14 @@ describe("category filter", () => {
     const facets = list.catalog.fn.facets({ attribute: "category", excludeZeros: false });
     const sizes = Object.fromEntries(facets.map((facet) => [facet.key, facet.size]));
     expect(sizes).toMatchObject({ "Team Sports": 3, Tennis: 1, Golf: 1, Yoga: 0 });
+  });
+});
+
+describe("vendor column", () => {
+  it("shows the resolved vendor's contact and company, and — for an article without a vendor", () => {
+    const [withVendor, withoutVendor] = list.catalog.query.items<{ vendorId?: Vendor }>();
+    expect(vendorLabel(withVendor.vendorId)).toBe("John Doe (SportWorld)");
+    expect(vendorLabel(withoutVendor.vendorId)).toBe("—");
   });
 });
 
