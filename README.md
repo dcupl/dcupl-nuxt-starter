@@ -1,6 +1,6 @@
 # dcupl Nuxt Starter
 
-![Start - 21](https://github.com/user-attachments/assets/1a89b6bb-4eb3-411b-bda3-0267d4da6ef7)
+![The dcupl Nuxt Starter: the article catalog with the product-name and category filters, the results table and paging](docs/screenshot.webp)
 
 
 ## Intro
