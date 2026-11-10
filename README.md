@@ -6,7 +6,7 @@
 ## Intro
 This project is a Nuxt starter template integrating [dcupl](https://docs.dcupl.com) for data filtering on the server and in the browser. It uses data and models from the **"Product Catalog"** console project. You can start by exploring the provided data and models and even create your own console project based on the Starter Catalog to update data and models as needed.
 
-**Stack:** Nuxt 4 (`app/` directory layout), [`@dcupl/nuxt`](https://github.com/dcupl/dcupl-nuxt) 0.1 with the dcupl SDK 2.1 (`@dcupl/core`, `@dcupl/common`), Tailwind CSS 4 via `@tailwindcss/vite`. Requires Node.js 20 or later.
+**Stack:** Nuxt 4 (`app/` directory layout), [`@dcupl/nuxt`](https://github.com/dcupl/dcupl-nuxt) 0.1 with the dcupl SDK 2.1 (`@dcupl/core`, `@dcupl/common`), Tailwind CSS 4 via `@tailwindcss/vite`. Requires Node.js `^22.22.3 || ^24.15.0 || >=26.0.0` (what Nuxt 4.6 requires).
 
 ## How it works
 - `app/pages/index.vue` lists the articles with filters and paging, `app/pages/articles/[key].vue` shows one article, `server/api/article/[key].ts` returns one article as JSON.
