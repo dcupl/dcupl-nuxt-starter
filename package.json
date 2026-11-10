@@ -10,16 +10,20 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@dcupl/nuxt": "file:../dcupl-nuxt-0.1.0-trial.1.tgz",
+    "@dcupl/common": "2.1.0",
+    "@dcupl/core": "2.1.0",
+    "@dcupl/nuxt": "file:../dcupl-nuxt-0.1.0-trial.2.tgz",
     "@tailwindcss/forms": "^0.5.9",
     "@tailwindcss/typography": "^0.5.15",
-    "nuxt": "^3.13.2",
-    "vue": "latest",
-    "vue-router": "latest"
+    "nuxt": "^4.6.4",
+    "vue": "^3.5.45",
+    "vue-router": "^5.4.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.47",
-    "tailwindcss": "^3.4.14"
+    "tailwindcss": "^3.4.14",
+    "typescript": "~5.9.3",
+    "vue-tsc": "^3.3.14"
   }
 }

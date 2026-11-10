@@ -73,7 +73,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ListMetadata } from "@dcupl/common";
+import type { ListMetadata } from "@dcupl/common";
 
 const articles = ref<any>([]);
 const meta = ref<ListMetadata | undefined>(undefined);
