@@ -10,9 +10,9 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@dcupl/common": "2.1.0",
-    "@dcupl/core": "2.1.0",
-    "@dcupl/nuxt": "file:../dcupl-nuxt-0.1.0-trial.2.tgz",
+    "@dcupl/common": "^2.1.0",
+    "@dcupl/core": "^2.1.0",
+    "@dcupl/nuxt": "file:../dcupl-nuxt-0.1.0.tgz",
     "@tailwindcss/forms": "^0.5.9",
     "@tailwindcss/typography": "^0.5.15",
     "nuxt": "^4.6.4",
