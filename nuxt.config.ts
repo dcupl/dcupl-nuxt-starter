@@ -1,21 +1,22 @@
+import tailwindcss from "@tailwindcss/vite";
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: "2024-10-24",
-  ssr: true,
+  compatibilityDate: "2026-11-10",
+  devtools: { enabled: true },
 
-  sourcemap: {
-    client: true,
-    server: true,
+  app: {
+    head: {
+      title: "dcupl Nuxt Starter",
+      htmlAttrs: { lang: "en" },
+      link: [{ rel: "icon", type: "image/svg+xml", href: "/favicon.svg" }],
+    },
   },
 
-  devtools: { enabled: true },
   css: ["~/assets/css/main.css"],
 
-  postcss: {
-    plugins: {
-      tailwindcss: {},
-      autoprefixer: {},
-    },
+  vite: {
+    plugins: [tailwindcss()],
   },
 
   modules: ["@dcupl/nuxt"],

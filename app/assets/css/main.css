@@ -1,0 +1,108 @@
+@import "tailwindcss";
+/* Inter: an open-source stand-in for the console's TT Interphases Pro, self-hosted from npm */
+@import "@fontsource-variable/inter";
+@plugin "@tailwindcss/forms";
+
+/*
+ * The dcupl console palette, prefixed dcu- so it sits next to Tailwind's default
+ * palette instead of replacing it. The same tokens as the dcupl Angular starter.
+ * Unlike Tailwind's scales, -50 is the solid colour: dcu-black-* and dcu-white-*
+ * are alpha steps over the ground, as in the console.
+ */
+@theme {
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+
+  --color-dcu-black-50: #000000;
+  --color-dcu-black-100: rgb(0 0 0 / 0.04);
+  --color-dcu-black-200: rgb(0 0 0 / 0.08);
+  --color-dcu-black-300: rgb(0 0 0 / 0.16);
+  --color-dcu-black-500: rgb(0 0 0 / 0.48);
+  --color-dcu-black-600: rgb(0 0 0 / 0.64);
+  --color-dcu-black-700: rgb(0 0 0 / 0.8);
+
+  --color-dcu-white-50: #ffffff;
+
+  /* the console's status colours, kept for your own badges and alerts */
+  --color-dcu-blue-100: #e1f0ff;
+  --color-dcu-blue-200: #d1e7ff;
+  --color-dcu-blue-300: #2756ff;
+  --color-dcu-blue-400: #0225ee;
+
+  --color-dcu-yellow-100: #fffaea;
+  --color-dcu-yellow-200: #fff3c8;
+  --color-dcu-yellow-300: #ffe58a;
+
+  --color-dcu-green-100: #ddfde8;
+  --color-dcu-green-200: #b5edbd;
+  --color-dcu-green-300: #0e8a4a;
+
+  --color-dcu-red-100: #ffd0d9;
+  --color-dcu-red-200: #ff7c93;
+  --color-dcu-red-300: #ff002d;
+}
+
+@layer base {
+  body {
+    @apply bg-dcu-white-50 font-sans text-dcu-black-50 antialiased;
+  }
+
+  ::selection {
+    @apply bg-dcu-blue-200 text-dcu-black-50;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-dcu-black-300) transparent;
+  }
+}
+
+/*
+ * One focus ring for every control. Unlayered on purpose: it must win over the
+ * forms plugin, which hides the outline of inputs and selects on focus.
+ */
+:focus-visible {
+  outline: 2px solid var(--color-dcu-blue-300);
+  outline-offset: 2px;
+}
+
+@layer components {
+  .dcu-panel {
+    @apply overflow-hidden rounded-xl border border-dcu-black-200;
+  }
+
+  .dcu-panel-header {
+    @apply flex h-14 items-center justify-between gap-3 bg-dcu-black-100 px-4 text-xs text-dcu-black-700 sm:px-6;
+  }
+
+  /*
+   * A horizontally scrolling region. The right edge fades out, so columns cut off
+   * by the card read as "scroll for more". Focused, the fade goes and the ring is
+   * drawn inside, where the card's overflow-hidden can't clip it.
+   */
+  .dcu-scroll-x {
+    @apply overflow-x-auto;
+    mask-image: linear-gradient(to right, #000 calc(100% - 2rem), transparent);
+
+    &:focus-visible {
+      mask-image: none;
+      outline-offset: -2px !important; /* beats the unlayered focus ring */
+    }
+  }
+
+  /* buttons named like their console counterparts (theme/buttons.scss) */
+  .dcu-button {
+    @apply inline-flex h-9 shrink-0 items-center justify-center gap-1.5 rounded border px-3 text-base leading-5 whitespace-nowrap transition-colors duration-200 disabled:cursor-not-allowed;
+  }
+
+  .dcu-button-black {
+    @apply border-transparent bg-dcu-black-50 text-dcu-white-50 hover:bg-dcu-black-600 disabled:bg-dcu-black-500;
+  }
+
+  .dcu-button-outline {
+    @apply border-dcu-black-300 bg-dcu-white-50 text-dcu-black-50 hover:border-dcu-black-50 hover:bg-dcu-black-50 hover:text-dcu-white-50 disabled:border-dcu-black-200 disabled:bg-dcu-white-50 disabled:text-dcu-black-500;
+  }
+
+  .dcu-button-clear {
+    @apply border-transparent bg-transparent text-dcu-black-50 hover:bg-dcu-black-100;
+  }
+}
