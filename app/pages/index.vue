@@ -117,7 +117,8 @@
 </template>
 <script setup lang="ts">
 import type { ListMetadata } from "@dcupl/common";
-import { PAGE_SIZE, usePaging } from "~/composables/usePaging";
+import { usePaging } from "~/composables/usePaging";
+import { PAGE_SIZE } from "~/utils/paging";
 
 type Article = { key: string; productName: string; category: string; price: number };
 

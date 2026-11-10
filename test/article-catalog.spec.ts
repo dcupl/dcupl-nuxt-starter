@@ -3,8 +3,9 @@ import type { DcuplList } from "@dcupl/core";
 import { Dcupl } from "@dcupl/core";
 import { afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { ref } from "vue";
-import { PAGE_SIZE, usePaging } from "../app/composables/usePaging";
+import { usePaging } from "../app/composables/usePaging";
 import { setSelectFilter, setTextFilter } from "../app/utils/filters";
+import { PAGE_SIZE } from "../app/utils/paging";
 
 // A tiny stand-in for the console project's Article model, held in memory: no network needed.
 const articles = [

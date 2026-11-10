@@ -10,7 +10,7 @@ This project is a Nuxt starter template integrating [dcupl](https://docs.dcupl.c
 
 ## How it works
 - `app/pages/index.vue` lists the articles with filters and paging, `app/pages/articles/[key].vue` shows one article, `server/api/article/[key].ts` returns one article as JSON (404 for an unknown key).
-- `app/utils/filters.ts` turns the filter inputs into list conditions (`setCondition`, `removeGroup`); every filter change goes back to page 1. `app/composables/usePaging.ts` holds the paging.
+- `app/utils/filters.ts` turns the filter inputs into list conditions (`setCondition`, `removeGroup`); every filter change goes back to page 1 with `startAtFirstPage` from `app/utils/paging.ts`. `app/composables/usePaging.ts` holds the previous/next paging.
 - The first page is rendered on the server with the dcupl instance of the server process, which the API routes share. The module checks the console project for changes at most once a minute and swaps in a new instance in the background.
 - After hydration the browser builds its own dcupl instance, and filtering and paging run client-side.
 - `test/article-catalog.spec.ts` runs the same filter and paging calls against an in-memory dcupl instance with 25 articles; `npm test` runs it without network.
@@ -40,7 +40,7 @@ The pages use the look of the dcupl console, the same as the dcupl Angular start
 
 2. **Your model.** The pages expect an `Article` model with `productName`, `category` (both filterable), `price` and a `vendorId` reference, as in the "Product Catalog" project. For another model, change `modelKey: "Article"` in `app/pages/index.vue`, `app/pages/articles/[key].vue` and `server/api/article/[key].ts`, and the `Article` type in `app/pages/index.vue`.
 3. **The filters.** Each `<text-filter>` and `<select-filter>` in `app/pages/index.vue` filters the `attribute` you give it; add one per attribute. The conditions they set are in `app/utils/filters.ts`.
-4. **The columns.** The `columns` array in `app/pages/index.vue` sets the table head; the row cells below it in the template show the values. Change both together. The page size is `PAGE_SIZE` in `app/composables/usePaging.ts`.
+4. **The columns.** The `columns` array in `app/pages/index.vue` sets the table head; the row cells below it in the template show the values. Change both together. The page size is `PAGE_SIZE` in `app/utils/paging.ts`.
 
 All module options are described in the [`@dcupl/nuxt` README](https://github.com/dcupl/dcupl-nuxt#readme).
 

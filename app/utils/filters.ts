@@ -1,13 +1,13 @@
 import { escapeRegExp } from "@dcupl/common";
 import type { DcuplList } from "@dcupl/core";
-import { goToFirstPage } from "../composables/usePaging";
+import { startAtFirstPage } from "./paging";
 
 /**
  * Keeps the items whose `attribute` contains `text`, ignoring case; empty text removes the filter.
  * The text is escaped, so `(` or `.` match themselves instead of acting as regex syntax.
  */
 export function setTextFilter(list: DcuplList, attribute: string, text: string): void {
-  goToFirstPage(list);
+  startAtFirstPage(list);
   if (!text) {
     list.catalog.query.removeGroup(attribute);
     return;
@@ -22,7 +22,7 @@ export function setTextFilter(list: DcuplList, attribute: string, text: string):
 
 /** Keeps the items whose `attribute` equals `value`; an empty value removes the filter. */
 export function setSelectFilter(list: DcuplList, attribute: string, value: string): void {
-  goToFirstPage(list);
+  startAtFirstPage(list);
   if (!value) {
     list.catalog.query.removeGroup(attribute);
     return;

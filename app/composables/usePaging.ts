@@ -1,8 +1,7 @@
 import type { ListMetadata } from "@dcupl/common";
 import type { DcuplList } from "@dcupl/core";
 import { computed, type Ref } from "vue";
-
-export const PAGE_SIZE = 10;
+import { PAGE_SIZE } from "../utils/paging";
 
 /** Previous/next paging over a list, read from the `start` and `count` the list's query applies. */
 export function usePaging(list: DcuplList, meta: Ref<ListMetadata>) {
@@ -22,12 +21,4 @@ export function usePaging(list: DcuplList, meta: Ref<ListMetadata>) {
   };
 
   return { start, count, page, pageCount, previousDisabled, nextDisabled, previous, next };
-}
-
-/**
- * Call before changing a filter: page 3 of the old result may not exist in the new one.
- * `skipProcessing` because the filter change right after recomputes the result once, on page 1.
- */
-export function goToFirstPage(list: DcuplList): void {
-  list.catalog.query.applyOptions({ start: 0 }, { skipProcessing: true });
 }
