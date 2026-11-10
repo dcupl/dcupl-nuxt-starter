@@ -1,22 +1,96 @@
-@import 'tailwindcss';
-
-@plugin '@tailwindcss/forms';
-@plugin '@tailwindcss/typography';
+@import "tailwindcss";
+/* Inter: an open-source stand-in for the console's TT Interphases Pro, self-hosted from npm */
+@import "@fontsource-variable/inter";
+@plugin "@tailwindcss/forms";
 
 /*
-  The default border color has changed to `currentcolor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
+ * The dcupl console palette (dcupl-console/tailwind.config.js), so class names
+ * read the same in both code bases: black-* and white-* are alpha scales over
+ * the ground, -50 is the solid colour. Same tokens as the dcupl Angular starter.
+ */
+@theme {
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
 
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
+  --color-*: initial;
+  --color-black-50: #000000;
+  --color-black-100: rgb(0 0 0 / 0.04);
+  --color-black-200: rgb(0 0 0 / 0.08);
+  --color-black-300: rgb(0 0 0 / 0.16);
+  --color-black-400: rgb(0 0 0 / 0.32);
+  --color-black-500: rgb(0 0 0 / 0.48);
+  --color-black-600: rgb(0 0 0 / 0.64);
+  --color-black-700: rgb(0 0 0 / 0.8);
+
+  --color-white-50: #ffffff;
+  --color-white-100: rgb(255 255 255 / 0.04);
+  --color-white-200: rgb(255 255 255 / 0.08);
+  --color-white-300: rgb(255 255 255 / 0.16);
+  --color-white-400: rgb(255 255 255 / 0.32);
+  --color-white-500: rgb(255 255 255 / 0.48);
+  --color-white-600: rgb(255 255 255 / 0.64);
+
+  --color-blue-100: #e1f0ff;
+  --color-blue-200: #d1e7ff;
+  --color-blue-300: #2756ff;
+  --color-blue-400: #0225ee;
+
+  --color-yellow-100: #fffaea;
+  --color-yellow-200: #fff3c8;
+  --color-yellow-300: #ffe58a;
+
+  --color-green-100: #ddfde8;
+  --color-green-200: #b5edbd;
+  --color-green-300: #0e8a4a;
+
+  --color-red-100: #ffd0d9;
+  --color-red-200: #ff7c93;
+  --color-red-300: #ff002d;
+}
+
 @layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentcolor);
+  body {
+    @apply bg-white-50 font-sans text-black-50 antialiased;
+  }
+
+  ::selection {
+    @apply bg-blue-200 text-black-50;
+  }
+
+  /* thin scrollbars in the console's black-alpha tones */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-black-300) transparent;
+  }
+}
+
+/*
+ * One focus ring for every control. Unlayered on purpose: it must win over the
+ * forms plugin, which hides the outline of inputs and selects on focus.
+ */
+:focus-visible {
+  outline: 2px solid var(--color-blue-300);
+  outline-offset: 2px;
+}
+
+/* Buttons and chips, named like their console counterparts (theme/buttons.scss, theme/tags.scss) */
+@layer components {
+  .dcu-button {
+    @apply inline-flex h-9 shrink-0 items-center justify-center gap-1.5 rounded border px-3 text-base leading-5 whitespace-nowrap transition-colors duration-200 disabled:cursor-not-allowed;
+  }
+
+  .dcu-button-black {
+    @apply border-transparent bg-black-50 text-white-50 hover:bg-black-600 disabled:bg-black-500;
+  }
+
+  .dcu-button-outline {
+    @apply border-black-300 bg-white-50 text-black-50 hover:border-black-50 hover:bg-black-50 hover:text-white-50 disabled:border-black-200 disabled:bg-white-50 disabled:text-black-500;
+  }
+
+  .dcu-button-clear {
+    @apply border-transparent bg-transparent text-black-50 hover:bg-black-100;
+  }
+
+  .dcu-tag {
+    @apply inline-flex h-5 min-w-5 shrink-0 items-center justify-center rounded-full bg-black-100 px-1.5 text-xs text-black-700 tabular-nums;
   }
 }
