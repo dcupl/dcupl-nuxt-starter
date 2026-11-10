@@ -8,7 +8,6 @@
       :id="inputId"
       v-model="selected"
       class="block h-9 w-full cursor-pointer rounded border-dcu-black-500 bg-dcu-white-50 py-0 pl-2.5 text-base hover:border-dcu-black-50 focus:border-dcu-black-50 focus:ring-0 sm:text-sm"
-      @change="updateFilter"
     >
       <option value="">All</option>
       <option v-for="option in options" :key="option.key" :value="option.key">
@@ -49,7 +48,5 @@ onMounted(() => {
 });
 onBeforeUnmount(() => stopFollowing());
 
-const updateFilter = (event: Event): void => {
-  setSelectFilter(props.list, props.attribute, (event.target as HTMLSelectElement).value);
-};
+watch(selected, (value) => setSelectFilter(props.list, props.attribute, value));
 </script>
