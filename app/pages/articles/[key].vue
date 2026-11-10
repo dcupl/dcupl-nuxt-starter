@@ -24,7 +24,7 @@ const article = computed(() =>
 
 const notFound = { statusCode: 404, statusMessage: "Article not found" };
 if (!article.value) {
-  throw createError({ ...notFound, fatal: true });
+  throw createError({ ...notFound, fatal: import.meta.client });
 }
 watch(article, (value) => {
   if (!value) showError(notFound);
