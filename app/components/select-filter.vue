@@ -1,16 +1,17 @@
 <template>
-  <div class="w-full">
-    <label :for="inputId" class="block text-sm font-medium leading-6 text-gray-900">
-      {{ attribute }}
+  <div>
+    <label :for="inputId" class="mb-2 block text-xs font-semibold text-black-700">
+      {{ label }}
+      <span class="font-normal text-black-600 tabular-nums">({{ facets.length }})</span>
     </label>
     <select
       :id="inputId"
-      class="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6"
+      class="block h-9 w-full cursor-pointer rounded border-black-500 bg-white-50 py-0 pl-2.5 text-sm hover:border-black-50 focus:border-black-50 focus:ring-0"
       @change="updateFilter"
     >
-      <option value="">Choose {{ attribute }}</option>
-      <option v-for="facet in facets" :value="facet.key" :key="facet.key">
-        {{ facet.key }} - ({{ facet.size }})
+      <option value="">All</option>
+      <option v-for="facet in facets" :key="facet.key" :value="facet.key">
+        {{ facet.key }} ({{ facet.size }})
       </option>
     </select>
   </div>
@@ -24,22 +25,10 @@ const inputId = useId();
 const props = defineProps<{
   list: DcuplList;
   attribute: string;
+  label: string;
 }>();
 
 const facets = ref<DcuplFacet[]>([]);
-
-onMounted(() => {
-  init();
-});
-
-const init = () => {
-  initFacets();
-  props.list.on((msg) => {
-    if (msg.action === "update") {
-      initFacets();
-    }
-  });
-};
 
 const initFacets = () => {
   facets.value = props.list.catalog.fn.facets({
@@ -48,8 +37,18 @@ const initFacets = () => {
   });
 };
 
-const updateFilter = (event: any) => {
-  const filterValue = event.target.value;
+// the options are in the server-rendered HTML; the browser keeps them in sync with the other filters
+initFacets();
+onMounted(() => {
+  props.list.on((msg) => {
+    if (msg.action === "update") {
+      initFacets();
+    }
+  });
+});
+
+const updateFilter = (event: Event) => {
+  const filterValue = (event.target as HTMLSelectElement).value;
 
   // reset paging
   props.list.catalog.query.applyOptions(
@@ -66,7 +65,7 @@ const updateFilter = (event: any) => {
       {
         attribute: props.attribute,
         operator: "eq",
-        value: `${event.target.value}`,
+        value: filterValue,
       },
       {
         mode: "set",

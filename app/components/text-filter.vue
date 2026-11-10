@@ -1,17 +1,16 @@
 <template>
   <div>
-    <label :for="inputId" class="block text-sm font-medium leading-6 text-gray-900">
-      {{ attribute }}
+    <label :for="inputId" class="mb-2 block text-xs font-semibold text-black-700">
+      {{ label }}
     </label>
-    <div>
-      <input
-        :id="inputId"
-        type="text"
-        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-xs ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-        placeholder="ball"
-        @keyup="updateFilter"
-      />
-    </div>
+    <input
+      :id="inputId"
+      type="text"
+      autocomplete="off"
+      class="block h-9 w-full rounded border-black-500 bg-white-50 px-2.5 text-sm placeholder:text-black-600 hover:border-black-50 focus:border-black-50 focus:ring-0"
+      placeholder="e.g.: Ball, Yoga, ..."
+      @input="updateFilter"
+    />
   </div>
 </template>
 <script setup lang="ts">
@@ -22,10 +21,12 @@ const inputId = useId();
 const props = defineProps<{
   list: DcuplList;
   attribute: string;
+  label: string;
 }>();
 
-const updateFilter = (event: any) => {
-  const filterValue = event.target.value;
+// filters while you type: every input event replaces this attribute's condition
+const updateFilter = (event: Event) => {
+  const filterValue = (event.target as HTMLInputElement).value;
 
   // reset paging
   props.list.catalog.query.applyOptions(
@@ -42,7 +43,7 @@ const updateFilter = (event: any) => {
       {
         attribute: props.attribute,
         operator: "find",
-        value: `/${event.target.value}/`,
+        value: `/${filterValue}/`,
         options: {
           transform: ["lowercase"],
         },
