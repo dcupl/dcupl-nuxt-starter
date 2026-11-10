@@ -9,25 +9,25 @@
 
     <div class="mb-6 max-w-3xl sm:mb-8">
       <h1 class="text-xl font-semibold">Article {{ route.params.key }}</h1>
-      <p class="mt-1 text-sm text-black-600">
-        What <code class="font-mono text-[0.8125rem] text-black-50">dcupl.query.one()</code> returns for this
+      <p class="mt-1 text-sm text-dcu-black-600">
+        What <code class="font-mono text-[0.8125rem] text-dcu-black-50">dcupl.query.one()</code> returns for this
         key, with the referenced vendor resolved. The API route serves the article without the vendor
         details at
         <a
           :href="`/api/article/${route.params.key}`"
-          class="border-b border-current text-black-50 transition-colors hover:text-blue-300"
+          class="border-b border-current text-dcu-black-50 transition-colors hover:text-dcu-blue-300"
           >/api/article/{{ route.params.key }}</a
         >.
       </p>
     </div>
 
-    <section aria-labelledby="article-title" class="max-w-3xl overflow-hidden rounded-xl border border-black-200">
-      <div class="flex h-14 items-center justify-between gap-3 bg-black-100 px-4 sm:px-6">
-        <h2 id="article-title" class="text-xs tracking-[0.12em] text-black-700 uppercase">Article</h2>
-        <p class="truncate text-xs text-black-700">{{ article?.productName }}</p>
+    <section aria-labelledby="article-title" class="dcu-panel max-w-3xl">
+      <div class="dcu-panel-header">
+        <h2 id="article-title" class="tracking-[0.12em] uppercase">Article</h2>
+        <p class="truncate">{{ article?.productName }}</p>
       </div>
       <pre
-        class="overflow-x-auto p-4 pr-10 font-mono text-sm leading-6 [mask-image:linear-gradient(to_right,#000_calc(100%-2rem),transparent)] focus-visible:outline-offset-[-2px]! focus-visible:[mask-image:none] sm:p-6 sm:pr-10"
+        class="dcu-scroll-x p-4 pr-10 font-mono text-sm leading-6 sm:p-6 sm:pr-10"
         role="region"
         aria-labelledby="article-title"
         tabindex="0"

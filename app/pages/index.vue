@@ -2,13 +2,13 @@
   <div class="mx-auto w-full max-w-screen-2xl px-4 py-6 sm:px-8 sm:py-10 xl:px-12">
     <div class="mb-6 max-w-3xl sm:mb-8">
       <h1 class="text-xl font-semibold">Article Catalog</h1>
-      <p class="mt-1 text-sm text-black-600">
+      <p class="mt-1 text-sm text-dcu-black-600">
         This starter loads data from a public dcupl starter project. Check it out at
         <a
           href="https://console.dcupl.com"
           target="_blank"
           rel="noopener"
-          class="border-b border-current text-black-50 transition-colors hover:text-blue-300"
+          class="border-b border-current text-dcu-black-50 transition-colors hover:text-dcu-blue-300"
           >console.dcupl.com</a
         >. The server renders the first page with the dcupl instance its API routes use; after
         hydration the browser loads its own and filters on the client.
@@ -16,14 +16,9 @@
     </div>
 
     <div class="grid items-start gap-6 lg:grid-cols-[18rem_minmax(0,1fr)] lg:gap-8">
-      <aside aria-labelledby="filters-title" class="overflow-hidden rounded-xl border border-black-200">
-        <h2
-          id="filters-title"
-          class="flex h-14 items-center bg-black-100 px-4 text-xs tracking-[0.12em] text-black-700 uppercase sm:px-6"
-        >
-          Filters
-        </h2>
-        <div class="divide-y divide-black-200">
+      <aside aria-labelledby="filters-title" class="dcu-panel">
+        <h2 id="filters-title" class="dcu-panel-header tracking-[0.12em] uppercase">Filters</h2>
+        <div class="divide-y divide-dcu-black-200">
           <div class="p-4 sm:p-6">
             <text-filter attribute="productName" label="Product name" :list="articleList" />
           </div>
@@ -33,23 +28,16 @@
         </div>
       </aside>
 
-      <section aria-labelledby="results-title" class="min-w-0 overflow-hidden rounded-xl border border-black-200">
-        <div class="flex h-14 items-center justify-between gap-3 bg-black-100 px-4 sm:px-6">
-          <h2 id="results-title" class="text-xs tracking-[0.12em] text-black-700 uppercase">Articles</h2>
-          <p class="text-xs text-black-700 tabular-nums" aria-live="polite">
-            <span class="font-semibold text-black-50">{{ meta.currentSize }}</span>
+      <section aria-labelledby="results-title" class="dcu-panel min-w-0">
+        <div class="dcu-panel-header">
+          <h2 id="results-title" class="tracking-[0.12em] uppercase">Articles</h2>
+          <p class="tabular-nums" aria-live="polite">
+            <span class="font-semibold text-dcu-black-50">{{ meta.currentSize }}</span>
             / {{ meta.initialSize }} results
           </p>
         </div>
 
-        <!-- the right edge fades out, so columns that continue off-card read as "scroll for more" -->
-        <div
-          v-if="articles.length"
-          class="overflow-x-auto [mask-image:linear-gradient(to_right,#000_calc(100%-2rem),transparent)] focus-visible:outline-offset-[-2px]! focus-visible:[mask-image:none]"
-          role="region"
-          aria-labelledby="results-title"
-          tabindex="0"
-        >
+        <div v-if="articles.length" class="dcu-scroll-x" role="region" aria-labelledby="results-title" tabindex="0">
           <table class="w-max min-w-full border-separate border-spacing-0 text-base">
             <thead>
               <tr>
@@ -57,7 +45,7 @@
                   v-for="column in columns"
                   :key="column.attribute"
                   scope="col"
-                  class="border-b border-black-200 px-3 py-2.5 text-xs font-normal tracking-wide whitespace-nowrap text-black-600 first:pl-4 last:pr-10 sm:first:pl-6"
+                  class="border-b border-dcu-black-200 px-3 py-2.5 text-xs font-normal tracking-wide whitespace-nowrap text-dcu-black-600 first:pl-4 last:pr-10 sm:first:pl-6"
                   :class="column.numeric ? 'text-right' : 'text-left'"
                 >
                   {{ column.label }}
@@ -65,11 +53,11 @@
               </tr>
             </thead>
             <tbody class="tabular-nums">
-              <tr v-for="article in articles" :key="article.key" class="odd:bg-black-100">
+              <tr v-for="article in articles" :key="article.key" class="odd:bg-dcu-black-100">
                 <td class="px-3 py-2 align-top first:pl-4 sm:first:pl-6">
                   <NuxtLink
                     :to="`/articles/${article.key}`"
-                    class="border-b border-current transition-colors hover:text-blue-300"
+                    class="border-b border-current transition-colors hover:text-dcu-blue-300"
                   >
                     {{ article.key }}
                   </NuxtLink>
@@ -88,15 +76,15 @@
         </div>
         <div v-else class="px-6 py-16 text-center">
           <p class="text-sm font-semibold">No articles match these filters</p>
-          <p class="mt-1 text-sm text-black-600">Change the product name or the category.</p>
+          <p class="mt-1 text-sm text-dcu-black-600">Change the product name or the category.</p>
         </div>
 
         <nav
           aria-label="Pagination"
-          class="flex items-center justify-between gap-3 border-t border-black-200 px-4 py-3 sm:px-6"
+          class="flex items-center justify-between gap-3 border-t border-dcu-black-200 px-4 py-3 sm:px-6"
         >
-          <p class="text-sm text-black-600 tabular-nums">
-            Page <span class="font-semibold text-black-50">{{ page }}</span> of {{ pageCount }}
+          <p class="text-sm text-dcu-black-600 tabular-nums">
+            Page <span class="font-semibold text-dcu-black-50">{{ page }}</span> of {{ pageCount }}
           </p>
           <div class="flex gap-2">
             <button

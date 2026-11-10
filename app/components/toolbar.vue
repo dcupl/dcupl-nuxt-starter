@@ -1,6 +1,6 @@
 <template>
   <header
-    class="sticky top-0 z-10 flex h-14 shrink-0 items-center justify-between gap-3 border-b border-black-200 bg-white-50 pr-2 pl-4 sm:pr-4 sm:pl-6"
+    class="sticky top-0 z-10 flex h-14 shrink-0 items-center justify-between gap-3 border-b border-dcu-black-200 bg-dcu-white-50 pr-2 pl-4 sm:pr-4 sm:pl-6"
   >
     <NuxtLink to="/" class="-mx-1 flex min-w-0 items-center gap-2 rounded px-1">
       <img src="/dcupl-logo.svg" alt="" width="26" height="28" class="h-6 w-auto shrink-0" />

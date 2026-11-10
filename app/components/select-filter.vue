@@ -1,13 +1,13 @@
 <template>
   <div>
-    <label :for="inputId" class="mb-2 block text-xs font-semibold text-black-700">
+    <label :for="inputId" class="mb-2 block text-xs font-semibold text-dcu-black-700">
       {{ label }}
-      <span class="font-normal text-black-600 tabular-nums">({{ options.length }})</span>
+      <span class="font-normal text-dcu-black-600 tabular-nums">({{ options.length }})</span>
     </label>
     <select
       :id="inputId"
       v-model="selected"
-      class="block h-9 w-full cursor-pointer rounded border-black-500 bg-white-50 py-0 pl-2.5 text-base hover:border-black-50 focus:border-black-50 focus:ring-0 sm:text-sm"
+      class="block h-9 w-full cursor-pointer rounded border-dcu-black-500 bg-dcu-white-50 py-0 pl-2.5 text-base hover:border-dcu-black-50 focus:border-dcu-black-50 focus:ring-0 sm:text-sm"
       @change="updateFilter"
     >
       <option value="">All</option>

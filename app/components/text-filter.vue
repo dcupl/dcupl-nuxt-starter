@@ -1,13 +1,13 @@
 <template>
   <div>
-    <label :for="inputId" class="mb-2 block text-xs font-semibold text-black-700">
+    <label :for="inputId" class="mb-2 block text-xs font-semibold text-dcu-black-700">
       {{ label }}
     </label>
     <input
       :id="inputId"
       type="text"
       autocomplete="off"
-      class="block h-9 w-full rounded border-black-500 bg-white-50 px-2.5 text-base placeholder:text-black-600 hover:border-black-50 focus:border-black-50 focus:ring-0 sm:text-sm"
+      class="block h-9 w-full rounded border-dcu-black-500 bg-dcu-white-50 px-2.5 text-base placeholder:text-dcu-black-600 hover:border-dcu-black-50 focus:border-dcu-black-50 focus:ring-0 sm:text-sm"
       placeholder="e.g.: Ball, Yoga, ..."
       @input="updateFilter"
     />
