@@ -1,7 +1,7 @@
 <template>
   <div class="container mx-auto pt-12">
     <div class="flex gap-5">
-      <div class="w-56 flex flex-col flex-shrink-0 gap-3 px-3">
+      <div class="w-56 flex flex-col shrink-0 gap-3 px-3">
         <text-filter
           :attribute="'productName'"
           :list="articleList"
