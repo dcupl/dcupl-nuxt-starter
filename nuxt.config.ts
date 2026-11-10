@@ -11,6 +11,15 @@ export default defineNuxtConfig({
   },
 
   devtools: { enabled: true },
+
+  app: {
+    head: {
+      title: "dcupl Nuxt Starter",
+      htmlAttrs: { lang: "en" },
+      link: [{ rel: "icon", type: "image/svg+xml", href: "/favicon.svg" }],
+    },
+  },
+
   css: ["~/assets/css/main.css"],
 
   vite: {

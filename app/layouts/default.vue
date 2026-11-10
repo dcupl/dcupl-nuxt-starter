@@ -1,11 +1,8 @@
 <template>
-  <div>
-    <div>
-      <Toolbar />
-    </div>
-    <div>
+  <div class="flex min-h-dvh flex-col">
+    <Toolbar />
+    <main class="flex-1">
       <slot />
-    </div>
+    </main>
   </div>
 </template>
-<script setup lang="ts"></script>
